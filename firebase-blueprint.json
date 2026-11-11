@@ -1,0 +1,218 @@
+{
+  "entities": {
+    "Message": {
+      "title": "Message",
+      "description": "Customer contact form submission or project consultation inquiry",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "Full name of the inquiring customer"
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 30,
+          "description": "Phone number or mobile coordinate"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Email address of customer"
+        },
+        "service": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Service of interest"
+        },
+        "budget": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Budget bracket in PKR"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 5000,
+          "description": "Project brief or architectural requirements"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of submission"
+        },
+        "read": {
+          "type": "boolean",
+          "description": "Read status flag by admin"
+        },
+        "replied": {
+          "type": "boolean",
+          "description": "Whether message was answered"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Internal administrative notes"
+        }
+      },
+      "required": ["name", "phone", "message", "createdAt"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "Architectural or construction service offering",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "Service title"
+        },
+        "category": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Service category"
+        },
+        "tagline": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Brief tagline"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 5000,
+          "description": "Detailed scope"
+        },
+        "image": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Image URL or storage reference"
+        },
+        "featured": {
+          "type": "boolean",
+          "description": "Whether featured on homepage"
+        }
+      },
+      "required": ["title", "description"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Architectural or interior portfolio project",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "Project name"
+        },
+        "category": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Project category"
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Site location in Lahore"
+        },
+        "scope": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Scope of work"
+        },
+        "area": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Square footage or plot size"
+        },
+        "year": {
+          "type": "string",
+          "maxLength": 20,
+          "description": "Completion year"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 5000,
+          "description": "Detailed project description"
+        },
+        "image": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Primary showcase photo URL"
+        },
+        "featured": {
+          "type": "boolean",
+          "description": "Featured flag"
+        },
+        "hasBeforeAfter": {
+          "type": "boolean",
+          "description": "Whether project has before/after slider"
+        },
+        "beforeImage": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Before renovation photo URL"
+        },
+        "afterImage": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "After completion photo URL"
+        }
+      },
+      "required": ["title", "description"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Company coordinates, phone numbers, and homepage content",
+      "type": "object",
+      "properties": {
+        "businessName": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "whatsapp": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 300 },
+        "heroHeadline": { "type": "string", "maxLength": 300 },
+        "heroSubtitle": { "type": "string", "maxLength": 500 },
+        "aboutIntro": { "type": "string", "maxLength": 5000 },
+        "businessHours": { "type": "string", "maxLength": 200 }
+      }
+    },
+    "AdminProfile": {
+      "title": "AdminProfile",
+      "description": "Authorized administrator record",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Customer inquiry records submitted through website"
+    },
+    "/services/{serviceId}": {
+      "schema": { "$ref": "#/entities/Service" },
+      "description": "Architectural and construction business services"
+    },
+    "/projects/{projectId}": {
+      "schema": { "$ref": "#/entities/Project" },
+      "description": "Portfolio architectural works and client projects"
+    },
+    "/siteSettings/{settingId}": {
+      "schema": { "$ref": "#/entities/SiteSettings" },
+      "description": "Global company details, phone numbers, and homepage copy"
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminProfile" },
+      "description": "Designated administrator credentials and authorization"
+    }
+  }
+}
